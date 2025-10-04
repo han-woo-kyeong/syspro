@@ -4,6 +4,7 @@ int main(int argc, char *argv[])
 {
    char c;
    FILE *fp1, *fp2;
+  
    if (argc !=3) {
       fprintf(stderr,  "How to use: %s File1 File2\n", argv[0]);
       return 1;
@@ -15,11 +16,6 @@ int main(int argc, char *argv[])
    }
 
    fp2 = fopen(argv[2], "a");
-   if (fp2 == NULL) {
-	   fprintf(stderr, "File %s open Error\n", argv[2]);
-	   return 3;
-   }
-
    while ((c = fgetc(fp1)) != EOF)
       fputc(c, fp2);
 

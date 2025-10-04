@@ -1,10 +1,11 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #define MAXLINE 80
 
 int main(int argc, char *argv[])
-{
+{  
     FILE *fp;
     int line = 0;
     char buffer[MAXLINE];
@@ -16,23 +17,27 @@ int main(int argc, char *argv[])
         start = 2;
     }
 
-    if (argc < start) {
-        fprintf(stderr, "Error: %s [-n] file1 file2 ...\n", argv[0]);
+    if (argc <= start) {
+        fprintf(stderr, "Usage: %s [-n] file1 file2 ...\n", argv[0]);
         exit(1);
     }
 
     for (int i = start; i < argc; i++) {
         fp = fopen(argv[i], "r");
         if (fp == NULL) {
-            fprintf(stderr, "Error Open File\n", argv[i]);
+            fprintf(stderr, "Error Open File: %s\n", argv[i]);
             continue;
         }
 
         line = 0;
         while (fgets(buffer, MAXLINE, fp) != NULL) {
             line++;
-            printf("%3d ",line, buffer);
+            if (numbering)
+                printf("%3d %s", line, buffer);
+            else
+                printf("%s", buffer);
         }
+
         fclose(fp);
     }
 
